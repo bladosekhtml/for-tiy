@@ -5,10 +5,13 @@
   font-weight: 500;
   font-family: Roboto, sans-serif;
 }
+
+main {
+  transform: translateX(-400vw);
+}
 .container {
   margin: 0 40px;
   min-height: 100%;
-  overflow: hidden;
 }
 body {
   display: flex;
@@ -84,7 +87,7 @@ main {
   background-color: rgb(246, 246, 246);
   flex-grow: 1;
   width: 500vw;
-  transition: .5s;
+  transition: 0.5s;
   padding: 80px 0;
 }
 .main__item {
@@ -110,8 +113,6 @@ main {
     padding-left: 8px;
     padding-bottom: 24px;
   }
-}
-.main__game {
 }
 .main__rating {
   table tr th {
@@ -204,7 +205,7 @@ main {
   table tr th:nth-child(5) {
     width: 160px;
   }
-  button {
+  > button {
     position: absolute;
     right: 40px;
     top: 30px;
@@ -214,4 +215,99 @@ main {
     background-color: #60c2aa;
     color: white;
   }
+}
+.NewPlayer {
+  width: 400px;
+  height: 420px;
+  padding: 64px 24px 0;
+  a {
+    position: absolute;
+    right: 24px;
+    top: 24px;
+  }
+  h2 {text-align: center;}
+  .formPlace {
+    input {
+      border: 1px #dcdcdf solid;
+      border-radius: 12px;
+      padding: 12px 20px;
+      width: 100%;
+      margin: 20px 0;
+    }
+    display: grid;
+    grid-template: 1fr/ 112px 1fr;
+    margin-bottom: 20px;
+    .name {
+      grid-column: span 2;
+    }
+    .age {
+      display: grid;
+      grid-template: 24px 48px/ 48px 48px;
+      gap: 8px;
+      input {width: 72px; height: 48px; margin: 0;}
+    }
+    .gender {
+      display: grid;
+      grid-template: 24px 48px/ 48px 48px;
+      gap: 8px;
+      label {grid-column: span 2;}
+    }
+  }
+  .gender-0,
+  .gender-1 {
+    width: 48px;
+    height: 48px;
+    position: relative;
+  }
+  img {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    pointer-events: none;
+    z-index: 10;
+  }
+  input[type="radio"] {
+    width: 48px;
+    height: 48px;
+    opacity: 0;
+    margin-top: 0;
+  }
+  .RadioEdit {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px #dcdcdf solid;
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    transition: .3s;
+  }
+  button {
+    width: 100%;
+    background-color: #60C2AA;
+    padding: 12px 20px;
+    border-radius: 14px;
+    color: white;
+  }
+  box-shadow: 0px 2px 6px 0px #2c39791a;
+  border-radius: 16px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: .3s;
+  display: none;
+  background-color: white;
+}
+#overlay {
+  display: none;
+  position: absolute;
+  top: -100vh;
+  left: -100vw;
+  width: 200vw;
+  height: 200vh;
+  background-color: rgba(0, 0, 0, 0.5);
 }

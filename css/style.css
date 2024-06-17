@@ -6,10 +6,14 @@
   font-family: Roboto, sans-serif;
 }
 
+main {
+  -webkit-transform: translateX(-400vw);
+          transform: translateX(-400vw);
+}
+
 .container {
   margin: 0 40px;
   min-height: 100%;
-  overflow: hidden;
 }
 
 body {
@@ -253,7 +257,7 @@ main {
 .main__ListPlayers table tr th:nth-child(5) {
   width: 160px;
 }
-.main__ListPlayers button {
+.main__ListPlayers > button {
   position: absolute;
   right: 40px;
   top: 30px;
@@ -262,4 +266,124 @@ main {
   border-radius: 12px;
   background-color: #60c2aa;
   color: white;
+}
+
+.NewPlayer {
+  width: 400px;
+  height: 420px;
+  padding: 64px 24px 0;
+  -webkit-box-shadow: 0px 2px 6px 0px rgba(44, 57, 121, 0.1019607843);
+          box-shadow: 0px 2px 6px 0px rgba(44, 57, 121, 0.1019607843);
+  border-radius: 16px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  display: none;
+  background-color: white;
+}
+.NewPlayer a {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+}
+.NewPlayer h2 {
+  text-align: center;
+}
+.NewPlayer .formPlace {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr;
+  -ms-grid-columns: 112px 1fr;
+      grid-template: 1fr/112px 1fr;
+  margin-bottom: 20px;
+}
+.NewPlayer .formPlace input {
+  border: 1px #dcdcdf solid;
+  border-radius: 12px;
+  padding: 12px 20px;
+  width: 100%;
+  margin: 20px 0;
+}
+.NewPlayer .formPlace .name {
+  -ms-grid-column-span: 2;
+  grid-column: span 2;
+}
+.NewPlayer .formPlace .age {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 24px 8px 48px;
+  -ms-grid-columns: 48px 8px 48px;
+      grid-template: 24px 48px/48px 48px;
+  gap: 8px;
+}
+.NewPlayer .formPlace .age input {
+  width: 72px;
+  height: 48px;
+  margin: 0;
+}
+.NewPlayer .formPlace .gender {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 24px 8px 48px;
+  -ms-grid-columns: 48px 8px 48px;
+      grid-template: 24px 48px/48px 48px;
+  gap: 8px;
+}
+.NewPlayer .formPlace .gender label {
+  -ms-grid-column-span: 2;
+  grid-column: span 2;
+}
+.NewPlayer .gender-0,
+.NewPlayer .gender-1 {
+  width: 48px;
+  height: 48px;
+  position: relative;
+}
+.NewPlayer img {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  pointer-events: none;
+  z-index: 10;
+}
+.NewPlayer input[type=radio] {
+  width: 48px;
+  height: 48px;
+  opacity: 0;
+  margin-top: 0;
+}
+.NewPlayer .RadioEdit {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px #dcdcdf solid;
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+.NewPlayer button {
+  width: 100%;
+  background-color: #60C2AA;
+  padding: 12px 20px;
+  border-radius: 14px;
+  color: white;
+}
+
+#overlay {
+  display: none;
+  position: absolute;
+  top: -100vh;
+  left: -100vw;
+  width: 200vw;
+  height: 200vh;
+  background-color: rgba(0, 0, 0, 0.5);
 }

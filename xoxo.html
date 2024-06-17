@@ -9,11 +9,11 @@
    <link rel="stylesheet" href="css/reset.css">
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    <title>XoXo</title>
+   <script src = "/js/server.js"></script>
 </head>
 
 <body>
-
-   <header>
+   <header>node server.js
       <div class="container">
          <div class="head">
             <div class="head__logotype">
@@ -90,9 +90,10 @@
             <div class="main-item main__ActivePlayers">
                <form action="ActivePlayers">
                   <h2>Активные игроки</h2>
-                  <label id = "body">Только свободные</label>
-                  <label class="CheckBox"><input type="checkbox" id = "ActiveFreePlayers"><span class = "ActivePlayersCheckbox"></span></label>
-                  <ul class = ActivePlayers__list>
+                  <label id="body">Только свободные</label>
+                  <label class="CheckBox"><input type="checkbox" id="ActiveFreePlayers"><span
+                        class="ActivePlayersCheckbox"></span></label>
+                  <ul class=ActivePlayers__list>
                   </ul>
                </form>
             </div>
@@ -116,8 +117,46 @@
          <div class="container">
             <div class="main-item main__ListPlayers">
                <h2>Список игроков</h2>
-               <button id = "AddPlayer" id = "body">Добавить игрока</button>
-               <table>
+               <button id="AddPlayer" id="body">Добавить игрока</button>
+               <div id="overlay"></div>
+               <div class="NewPlayer">
+                  <form action="">
+                     <a id = "CloseNewPlayer" href="#">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <path
+                              d="M13.2997 0.710001C12.9097 0.320001 12.2797 0.320001 11.8897 0.710001L6.99973 5.59L2.10973 0.700001C1.71973 0.310001 1.08973 0.310001 0.699727 0.700001C0.309727 1.09 0.309727 1.72 0.699727 2.11L5.58973 7L0.699727 11.89C0.309727 12.28 0.309727 12.91 0.699727 13.3C1.08973 13.69 1.71973 13.69 2.10973 13.3L6.99973 8.41L11.8897 13.3C12.2797 13.69 12.9097 13.69 13.2997 13.3C13.6897 12.91 13.6897 12.28 13.2997 11.89L8.40973 7L13.2997 2.11C13.6797 1.73 13.6797 1.09 13.2997 0.710001Z"
+                              fill="#373745" />
+                        </svg>
+                     </a>
+                     <h2>Добавьте игрока</h2>
+                     <div class="formPlace">
+                        <div class="name">
+                           <label for="name">ФИО</label>
+                           <br><input style = "transition: .3s;" id = "NamePlayer" type="text" placeholder="Иванов Иван Иванович">
+                        </div>
+                        <div class="age">
+                           <label for="age">Возраст</label>
+                           <br><input style = "transition: .3s;" type="text" placeholder="0" id = "AgePlayer">
+                        </div>
+                        <div class="gender">
+                           <label for="gender">Пол</label>
+                           <div class="gender-0">
+                              <input type="radio" class = "GenderRadio" name="gender" value='0'>
+                              <img src="/img/Gender0.png" alt="Женщина">
+                              <span class="RadioEdit RadioEdit0"></span>
+                           </div>
+                           <div class="gender-1">
+                              <input type="radio" class = "GenderRadio" name="gender" value="1">
+                              <img src="/img/Gender1.png" alt="Мужчина">
+                              <span class="RadioEdit RadioEdit1"></span>
+                           </div>
+                        </div>
+                     </div>
+                     <button id = "CreateNewPlayer" type="button">Добавить</button>
+                  </form>
+               </div>
+
+               <table id = "PlayerList-t">
                   <tr>
                      <th>ФИО</th>
                      <th>Возраст</th>
