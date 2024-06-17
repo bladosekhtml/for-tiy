@@ -1,0 +1,217 @@
+* {
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.24px;
+  font-weight: 500;
+  font-family: Roboto, sans-serif;
+}
+.container {
+  margin: 0 40px;
+  min-height: 100%;
+  overflow: hidden;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+h2 {
+  font-weight: 700;
+  line-height: 36px;
+  font-size: 24px !important;
+  font-family: Roboto, sans-serif;
+}
+#body {
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.23999999463558197px;
+}
+tr {
+  box-shadow: 0px -1px 0px 0px #eeeff5 inset;
+  text-align: left;
+}
+th {
+  padding: 0 8px;
+}
+td {
+  font-size: 16px;
+  font-weight: 500;
+}
+/*===========================================Header==========================================*/
+header {
+  border-bottom-right-radius: 16px;
+  border-bottom-left-radius: 16px;
+  box-shadow: 0px 2px 6px 0px #2c39791a;
+  background-color: #fff;
+}
+.head {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+  align-items: center;
+  svg {
+    display: grid;
+    align-items: center;
+  }
+}
+.menu__links {
+  display: flex;
+  gap: 16px;
+  .ActiveLink {
+    background-color: #60c2aa;
+    color: white;
+    transition: 0.3s;
+    &:hover {
+      background-color: #60c2aa;
+    }
+  }
+}
+.menu-link {
+  border-radius: 200px;
+  padding: 4px 12px;
+  transition: 0.3s;
+  &:hover {
+    background-color: #f7f7f7;
+  }
+}
+
+/*====================================Main=================================*/
+main {
+  display: grid;
+  grid-template: 1fr / repeat(5, 100vw);
+  background-color: rgb(246, 246, 246);
+  flex-grow: 1;
+  width: 500vw;
+  transition: .5s;
+  padding: 80px 0;
+}
+.main__item {
+  flex-grow: 1;
+  height: 100%;
+  .container {
+    height: 100%;
+    width: 100vw;
+  }
+}
+.main-item {
+  display: inline-block;
+  box-shadow: 0px 4px 20px 0px #2c397917;
+  padding: 32px;
+  border-radius: 40px;
+  align-items: center;
+  background-color: white;
+  height: 100%;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0);
+  h2 {
+    padding-left: 8px;
+    padding-bottom: 24px;
+  }
+}
+.main__game {
+}
+.main__rating {
+  table tr th {
+    width: 180px;
+  }
+  table tr th:nth-child(1) {
+    width: 440px;
+  }
+}
+.main__ActivePlayers {
+  form {
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(2, 1fr);
+    width: 860px;
+    align-items: center;
+  }
+  form ul {
+    grid-column: span 3;
+  }
+  form h2 {
+    text-align: start;
+  }
+  form > label {
+    text-align: end;
+  }
+  .CheckBox {
+    width: 40px;
+    height: 20px;
+    position: relative;
+    margin-top: 3.5px;
+  }
+  input {
+    opacity: 0;
+    position: absolute;
+    width: 40px;
+    height: 20px;
+    left: 0;
+  }
+  .ActivePlayersCheckbox {
+    content: "";
+    width: 33px;
+    height: 14px;
+    background-color: #dcdcdf;
+    position: absolute;
+    margin: (3px) (((40px - 33px)/2));
+    border-radius: 10px;
+    transition: 0.3s;
+    left: 0;
+    top: 0;
+  }
+  .ActivePlayersCheckbox::after {
+    content: "";
+    transition: 0.3s;
+    width: 18px;
+    height: 18px;
+    background-color: #f7f7f7;
+    border-radius: 50%;
+    border: solid 1px #dcdcdf;
+    position: absolute;
+    left: 0;
+    top: -2px;
+  }
+  input[type="checkbox"]:checked + .ActivePlayersCheckbox::after {
+    background-color: #3ba189;
+    border: solid 1px #3ba189;
+    transform: translateX(15px);
+  }
+  input[type="checkbox"]:checked + .ActivePlayersCheckbox {
+    background-color: #60c2aa;
+  }
+}
+.main__history {
+  table tr th {
+    width: 160px;
+  }
+  table tr th:nth-child(1) {
+    width: 680px;
+  }
+}
+.main__ListPlayers {
+  table tr th:nth-child(1) {
+    width: 440px;
+  }
+  table tr th:nth-child(7) {
+    width: 190px;
+  }
+  table tr th:nth-child(4) {
+    width: 160px;
+  }
+  table tr th:nth-child(5) {
+    width: 160px;
+  }
+  button {
+    position: absolute;
+    right: 40px;
+    top: 30px;
+    width: 170px;
+    height: 50px;
+    border-radius: 12px;
+    background-color: #60c2aa;
+    color: white;
+  }
+}
