@@ -6,9 +6,6 @@
   font-family: Roboto, sans-serif;
 }
 
-main {
-  transform: translateX(-400vw);
-}
 .container {
   margin: 0 40px;
   min-height: 100%;
@@ -35,7 +32,8 @@ tr {
   box-shadow: 0px -1px 0px 0px #eeeff5 inset;
   text-align: left;
 }
-th {
+th,
+td {
   padding: 0 8px;
 }
 td {
@@ -48,6 +46,11 @@ header {
   border-bottom-left-radius: 16px;
   box-shadow: 0px 2px 6px 0px #2c39791a;
   background-color: #fff;
+}
+.green {
+  path {
+    fill: #60c2aa;
+  }
 }
 .head {
   display: flex;
@@ -225,7 +228,9 @@ main {
     right: 24px;
     top: 24px;
   }
-  h2 {text-align: center;}
+  h2 {
+    text-align: center;
+  }
   .formPlace {
     input {
       border: 1px #dcdcdf solid;
@@ -244,13 +249,19 @@ main {
       display: grid;
       grid-template: 24px 48px/ 48px 48px;
       gap: 8px;
-      input {width: 72px; height: 48px; margin: 0;}
+      input {
+        width: 72px;
+        height: 48px;
+        margin: 0;
+      }
     }
     .gender {
       display: grid;
       grid-template: 24px 48px/ 48px 48px;
       gap: 8px;
-      label {grid-column: span 2;}
+      label {
+        grid-column: span 2;
+      }
     }
   }
   .gender-0,
@@ -283,11 +294,11 @@ main {
     left: 0;
     top: 0;
     pointer-events: none;
-    transition: .3s;
+    transition: 0.3s;
   }
   button {
     width: 100%;
-    background-color: #60C2AA;
+    background-color: #60c2aa;
     padding: 12px 20px;
     border-radius: 14px;
     color: white;
@@ -298,7 +309,7 @@ main {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  transition: .3s;
+  transition: 0.3s;
   display: none;
   background-color: white;
 }
@@ -310,4 +321,78 @@ main {
   width: 200vw;
   height: 200vh;
   background-color: rgba(0, 0, 0, 0.5);
+}
+.LockStatus {
+  width: 100%;
+  height: 32px;
+  margin: 5px;
+  border-radius: 8px;
+}
+.LockStatus0 {
+  background-color: #a8d37f;
+  position: relative;
+}
+.LockStatus0::after,
+.LockStatus1::after {
+  color: white;
+  font-weight: 400;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.LockStatus0::after {
+  content: "Активен";
+}
+.LockStatus1::after {
+  content: "Заблокирован";
+}
+.LockStatus1 {
+  background-color: #ec7777;
+  position: relative;
+}
+.LockButton {
+  width: 100%;
+  gap: 5px;
+  background-color: #f7f7f7;
+  height: 32px;
+  border-radius: 8px;
+}
+.LockButton1,
+.LockButton0 {
+  position: relative;
+}
+.LockButton1::after {
+  content: "Разблокировать";
+}
+.LockButton0::after {
+  content: "Заблокировать";
+}
+.LockButton0::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-image: url("/img/none.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.LockButton1::after {
+  position: absolute;
+  font-weight: 400;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.LockButton0::after {
+  position: absolute;
+  font-weight: 400;
+  right: 10px;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.LockButton0::before {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translate(0, -50%);
 }

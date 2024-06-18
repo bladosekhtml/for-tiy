@@ -1,14 +1,10 @@
+@charset "UTF-8";
 * {
   font-size: 16px;
   line-height: 24px;
   letter-spacing: 0.24px;
   font-weight: 500;
   font-family: Roboto, sans-serif;
-}
-
-main {
-  -webkit-transform: translateX(-400vw);
-          transform: translateX(-400vw);
 }
 
 .container {
@@ -48,7 +44,8 @@ tr {
   text-align: left;
 }
 
-th {
+th,
+td {
   padding: 0 8px;
 }
 
@@ -64,6 +61,10 @@ header {
   -webkit-box-shadow: 0px 2px 6px 0px rgba(44, 57, 121, 0.1019607843);
           box-shadow: 0px 2px 6px 0px rgba(44, 57, 121, 0.1019607843);
   background-color: #fff;
+}
+
+.green path {
+  fill: #60c2aa;
 }
 
 .head {
@@ -372,7 +373,7 @@ main {
 }
 .NewPlayer button {
   width: 100%;
-  background-color: #60C2AA;
+  background-color: #60c2aa;
   padding: 12px 20px;
   border-radius: 14px;
   color: white;
@@ -386,4 +387,96 @@ main {
   width: 200vw;
   height: 200vh;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.LockStatus {
+  width: 100%;
+  height: 32px;
+  margin: 5px;
+  border-radius: 8px;
+}
+
+.LockStatus0 {
+  background-color: #a8d37f;
+  position: relative;
+}
+
+.LockStatus0::after,
+.LockStatus1::after {
+  color: white;
+  font-weight: 400;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.LockStatus0::after {
+  content: "Активен";
+}
+
+.LockStatus1::after {
+  content: "Заблокирован";
+}
+
+.LockStatus1 {
+  background-color: #ec7777;
+  position: relative;
+}
+
+.LockButton {
+  width: 100%;
+  gap: 5px;
+  background-color: #f7f7f7;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.LockButton1,
+.LockButton0 {
+  position: relative;
+}
+
+.LockButton1::after {
+  content: "Разблокировать";
+}
+
+.LockButton0::after {
+  content: "Заблокировать";
+}
+
+.LockButton0::before {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-image: url("/img/none.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.LockButton1::after {
+  position: absolute;
+  font-weight: 400;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.LockButton0::after {
+  position: absolute;
+  font-weight: 400;
+  right: 10px;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+}
+
+.LockButton0::before {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
 }

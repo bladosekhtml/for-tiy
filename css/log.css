@@ -1,0 +1,83 @@
+* {
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.24px;
+  font-weight: 500;
+  font-family: Roboto, sans-serif;
+}
+
+h2 {
+  font-weight: 700;
+  line-height: 36px;
+  font-size: 24px !important;
+  font-family: Roboto, sans-serif;
+}
+
+/*========================================================*/
+body {
+  background-color: rgb(246, 246, 246);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.window {
+  position: absolute;
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 40px 24px;
+}
+.window form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 20px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.window input {
+  padding: 12px 20px;
+  border: 1px solid #dcdcdf;
+  border-radius: 12px;
+}
+.window button {
+  background-color: #60c2aa;
+  color: white;
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+}
+.window button:disabled {
+  background-color: rgba(96, 194, 170, 0.1882352941);
+}
+
+.window__reg {
+  display: none;
+}
+
+p {
+  display: none;
+  color: red;
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: -18px;
+  margin-bottom: -5px;
+}
