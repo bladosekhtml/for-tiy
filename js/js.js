@@ -11,9 +11,7 @@ $(document).ready(function () {
 
    /*============================================= Переменные ============================*/
    players = []
-   ListIndex = 0
-
-
+   ListIndex = 1
 
    /*============================================ Запрет ввода =================================*/
    const numberInput = document.getElementById('AgePlayer');
@@ -35,7 +33,7 @@ $(document).ready(function () {
          name: name,
          age: age,
          gender: gender,
-         status: 0,
+         status: 1,
          create: new Date(),
          edit: new Date(),
          games: 0,
@@ -59,6 +57,49 @@ $(document).ready(function () {
 
       return `${day} ${months[monthIndex]} ${year}`;
    }
+   /*==================================Интервальный обработчик==================*/
+   setInterval(function () {
+      // Активные игроки
+      let ulCode = '';
+      if ($('#ActiveFreePlayers').prop('checked')) {
+         for (let player of players) {
+            if (player.status == 1) {
+               ulCode += '<li><p class = "ActiveP">' + player.name + '</p><div class = "PlayerF PlayerFree"></div></div><button type = "button" class = "PlayerGo">Позвать играть</button></li>';
+            }
+         }
+      } else {
+         for (let player of players) {
+            if (player.status == 1) {
+               ulCode += '<li><p class = "ActiveP">' + player.name + '</p><div class = "PlayerF PlayerFree"></div><button type = "button" class = "PlayerGo">Позвать играть</button></li>';
+            } else {
+               ulCode += '<li><p class = "ActiveP">' + player.name + '</p><div class = "PlayerF PlayerNotFree"></div><button disabled type = "button" class = "PlayerGo">Позвать играть</button></li>';
+            }
+         }
+      }
+      document.getElementById('ActivePlayers__list').innerHTML = ulCode;
+
+
+      if (players.length != 0) {
+         let ratCode = '<th>ФИО</th><th>Всего игр</th><th>Победы</th><th>Проигрыши</th><th>Процент побед</th>';
+         playersRating = players.map(obj => ({ ...obj })); // Копирование
+         playersRating.sort((a, b) => (b.win) - (a.win)); // Сортировка по убыванию
+         for (let player of players) {
+            if (player.games != 0) {
+               ratCode += '<tr></tr><tr><td>' + player.name + '</td><td>' +
+                  player.games + '</td><td style = "color: #69B849">' +
+                  player.win + '</td><td style = "color: #E93E3E">' +
+                  player.lose + '</td><td>' + parseInt(player.win / player.games) + '%</td></tr>'
+            }
+            else {
+               ratCode += '<tr></tr><tr><td>' + player.name + '</td><td>' +
+                  player.games + '</td><td style = "color: #69B849">' +
+                  player.win + '</td><td style = "color: #E93E3E">' +
+                  player.lose + '</td><td>0%</td></tr>'
+            }
+         }
+         document.getElementById('TableRating').innerHTML = ratCode;
+      }
+   }, 0)
    /*==============================================Обработчики на клик=================================*/
    // Вход - выход
    $('.head__door').on('click', function () {
@@ -159,15 +200,19 @@ $(document).ready(function () {
    });
 
    //Блокировка пользователей
-   $('.LockButton').on('click', function(){
+   $('#PlayerList-t').on('click', '.LockButton', function () {
       $(this).toggleClass('LockButton0')
       $(this).toggleClass('LockButton1')
 
       let table = document.getElementById('PlayerList-t');
       let row = table.rows[parseInt(this.getAttribute('data-index'))];
-      let col = row.ceils[3];
-      let innerDiv = col.querySelector('.LockStatus');
+      let col = row.cells[3];
+      let innerDiv = $(col).find('.LockStatus');
       innerDiv.toggleClass('LockStatus1');
       innerDiv.toggleClass('LockStatus0');
+
+      if (innerDiv.hasClass('LockStatus1')) { players[parseInt(this.getAttribute('data-index')) - 1].status = 0; players[parseInt(this.getAttribute('data-index')) - 1].lock = 1; }
+      else { players[parseInt(this.getAttribute('data-index')) - 1].status = 1; players[parseInt(this.getAttribute('data-index')) - 1].lock = 0; }
+      console.log(players)
    })
 })
