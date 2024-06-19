@@ -7,17 +7,13 @@
   font-family: Roboto, sans-serif;
 }
 
-main {
-  -webkit-transform: translateX(-100vw);
-          transform: translateX(-100vw);
-}
-
 .container {
   margin: 0 40px;
   min-height: 100%;
 }
 
 body {
+  overflow: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -51,7 +47,7 @@ tr {
 
 th,
 td {
-  padding: 0 8px;
+  padding: 4px 8px;
 }
 
 td {
@@ -132,7 +128,7 @@ main {
   width: 500vw;
   -webkit-transition: 0.5s;
   transition: 0.5s;
-  padding: 80px 0;
+  padding: 40px 0;
 }
 
 .main__item {
@@ -262,8 +258,11 @@ main {
 .main__history table tr th {
   width: 160px;
 }
-.main__history table tr th:nth-child(1) {
-  width: 680px;
+.main__history table tr th:nth-child(1), .main__history table tr th:nth-child(3) {
+  width: 300px;
+}
+.main__history table tr th:nth-child(2) {
+  width: 80px;
 }
 
 .main__ListPlayers table tr th:nth-child(1) {
@@ -287,6 +286,9 @@ main {
   border-radius: 12px;
   background-color: #60c2aa;
   color: white;
+}
+.main__ListPlayers > button:disabled {
+  background-color: rgba(96, 194, 170, 0.2509803922);
 }
 
 .NewPlayer {
@@ -400,7 +402,7 @@ main {
   color: white;
 }
 
-#overlay {
+#overlay, #overlay1 {
   z-index: 77;
   display: none;
   position: absolute;
@@ -553,4 +555,251 @@ main {
   background-color: #f7f7f7;
   color: #373745;
   cursor: default;
+}
+
+/*=================================================Делаю основную часть===========================*/
+.main__who {
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  text-align: center;
+  padding: 20px;
+  height: 300px;
+  width: 500px;
+}
+.main__who form > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.main__who form > div p span {
+  font-size: 32px;
+  font-weight: 700;
+}
+.main__who form > div p span:first-child {
+  color: #60c2aa;
+}
+.main__who form > div p span:last-child {
+  color: #e38bac;
+}
+.main__who form > div select {
+  border: 1px solid #dcdcdf;
+  border-radius: 8px;
+  width: 100%;
+  margin: 10px 0;
+  padding: 8px;
+}
+
+.PlayerVS {
+  height: 100%;
+}
+.PlayerVS h2 {
+  font-size: 20px !important;
+}
+
+#StartGame {
+  width: 90%;
+  padding: 12px 8px;
+  text-align: center;
+  background-color: #60c2aa;
+  color: white;
+  border-radius: 12px;
+  font-size: 24px;
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+}
+#StartGame:disabled {
+  background-color: rgba(96, 194, 170, 0.2509803922);
+  cursor: pointer;
+}
+
+.main__game {
+  display: none;
+}
+.main__game .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 0;
+  gap: 89px;
+}
+
+.player {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.gplayers {
+  width: 500px;
+  padding: 24px;
+  border-radius: 20px;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 4px 20px 0px rgba(44, 57, 121, 0.0901960784);
+          box-shadow: 0px 4px 20px 0px rgba(44, 57, 121, 0.0901960784);
+}
+
+.gtimer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.main__game2 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 20px;
+}
+
+.gtimer {
+  width: 140px;
+  height: 80px;
+  background-color: #EDEDED;
+  border-radius: 8px;
+}
+
+.gplaces {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 200px 4px 200px 4px 200px;
+  -ms-grid-columns: 200px 4px 200px 4px 200px;
+      grid-template: repeat(3, 200px)/repeat(3, 200px);
+  gap: 4px;
+}
+
+.gplace {
+  -webkit-box-shadow: 0px 4px 20px 0px rgba(44, 57, 121, 0.0901960784);
+          box-shadow: 0px 4px 20px 0px rgba(44, 57, 121, 0.0901960784);
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 12px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.gfoot {
+  width: 400px;
+  height: 48px;
+  background-color: #373745;
+  border-radius: 12px;
+  padding: 12px;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 12px;
+}
+
+.disabled1, .disabled2 {
+  cursor: default;
+}
+
+.GreenWin {
+  background-color: #CFEDE6;
+}
+
+.RedWin {
+  background-color: #F3BBD0;
+}
+
+.main__repeat {
+  position: fixed;
+  left: 50vw;
+  top: 50vh;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 400px;
+  padding: 40px 24px;
+  background-color: white;
+  border-radius: 16px;
+  -webkit-box-shadow: 0px 4px 20px 0px rgba(44, 57, 121, 0.0901960784);
+          box-shadow: 0px 4px 20px 0px rgba(44, 57, 121, 0.0901960784);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 12px;
+  z-index: 1000;
+  display: none;
+}
+.main__repeat img {
+  width: 132px;
+  height: 160px;
+}
+.main__repeat h2 {
+  text-align: center;
+  margin: 8px 0;
+}
+.main__repeat button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+  height: 32px;
+  padding: 12px 20px;
+  border-radius: 12px;
+}
+.main__repeat #repeatGame {
+  color: white;
+  background-color: #60C2AA;
+}
+.main__repeat #goMenu {
+  background-color: #F7F7F7;
+}
+
+.dflex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.dnone {
+  display: none !important;
 }

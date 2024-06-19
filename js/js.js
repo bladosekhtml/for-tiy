@@ -12,6 +12,7 @@ $(document).ready(function () {
    /*============================================= Переменные ============================*/
    players = []
    ListIndex = 1
+   games = []
 
    /*============================================ Запрет ввода =================================*/
    const numberInput = document.getElementById('AgePlayer');
@@ -42,6 +43,17 @@ $(document).ready(function () {
          lock: 0,
       }
    }
+
+   // Добавление игры в историю 
+   function NewGame(win, time, px, po, dat) {
+      return {
+         playerx: px,
+         playero: po,
+         data: dat,
+         time: time,
+         win: win
+      }
+   }
    //Сделай дату красивой
    function formatDate(date) {
       const months = [
@@ -56,9 +68,138 @@ $(document).ready(function () {
       let year = date.getFullYear();
 
       return `${day} ${months[monthIndex]} ${year}`;
+
+      //Вывод всех активных игроков
+   }
+   function AllFree() {
+      var freeplayers = document.querySelectorAll('select');
+      var selCode = '';
+
+      for (let player of players) {
+         if (player.status === 1) {
+            selCode += '<option value = "' + player.name + '">' + player.name + '</option>';
+         }
+      }
+
+      freeplayers.forEach(element => {
+         element.innerHTML = selCode;
+      });
+   }
+
+   //Таймер
+   function timerf(t) {
+      let min = 0
+      let sec = 0
+      let msec = 0
+      t = document.getElementById(t)
+      StopGame = false
+      timer = setInterval(function () {
+         if (StopGame) {
+            clearInterval(timer)
+         }
+         msec += 1
+
+         if (msec == 100) {
+            msec = 0;
+            sec += 1;
+         }
+         if (sec == 60) {
+            sec = 0;
+            min += 1
+         }
+         if (min == 100) {
+            StopGame = true;
+         }
+         time = '<h2>' + min + ':' + sec + '</h2>';
+         t.innerHTML = time;
+      }, 10)
+   }
+
+   //Проверка победы1
+   function xoWL(a) {
+      if (a == 'disabled1') { var color = 'GreenWin' } else { var color = "RedWin" }
+      btn = document.getElementsByClassName('gplace');
+      let mas = []
+      for (let i = 0; i < 9; i += 3) {
+         mas[mas.length] = [btn[i], btn[i + 1], btn[i + 2]]
+      }
+      for (let i = 0; i < 3; i++) {
+         for (let j = 0; j < 3; j++) {
+            if (j + i == 3) { break }
+            if (i == 0 && j == 0) {
+               let d1 = 0;
+               for (let k = 0; k < 3; k++) {
+                  if (mas[i + k][j + k].getAttribute('class').includes(a)) {
+                     d1 += 1;
+                  }
+               }
+               if (d1 == 3) {
+                  for (let k = 0; k < 3; k++) {
+                     mas[i + k][j + k].classList.add(color)
+                  };
+                  return true
+               }
+            }
+            if (i == 0) {
+               let d = 0;
+               for (let k = 0; k < 3; k++) {
+                  if (mas[i + k][j].getAttribute('class').includes(a)) { d += 1; }
+               }
+               if (d == 3) {
+                  for (let k = 0; k < 3; k++) {
+                     mas[i + k][j].classList.add(color)
+                  } return true
+               }
+            }
+            if (j == 0) {
+               let d = 0;
+               for (let k = 0; k < 3; k++) {
+                  if (mas[i][j + k].getAttribute('class').includes(a)) { d += 1; }
+               }
+               if (d == 3) {
+                  for (let k = 0; k < 3; k++) {
+                     mas[i][j + k].classList.add(color)
+                  }
+                  return true
+               }
+            }
+            if (i == 2 && j == 0) {
+               let d2 = 0;
+               for (let k = 0; k < 3; k++) {
+                  if (mas[i - k][j + k].getAttribute('class').includes(a)) { d2 += 1; }
+               }
+               if (d2 == 3) {
+                  for (let k = 0; k < 3; k++) {
+                     mas[i - k][j + k].classList.add(color)
+                  }
+                  return true
+               }
+            }
+         }
+      }
+      return false
+   }
+   //Проверка победы2
+   function taskXO(count) {
+      if (xoWL('disabled1')) {
+         document.getElementById('thisWinner').innerHTML = 'Победил игрок: <br>' + $('#Player1').val();
+         return 1
+      } else if (xoWL('disabled2')) {
+         document.getElementById('thisWinner').innerHTML = 'Победил игрок: <br>' + $('#Player2').val();
+         return 2
+      }
+      else if (count == 9) {
+         document.getElementById('thisWinner').innerText = 'Победила дружба';
+         return 1.5
+      }
+      else { return 0 }
    }
    /*==================================Интервальный обработчик==================*/
    setInterval(function () {
+      //Блокировка кнопок
+      if (StatusLog == 0) {
+         $('button').prop('disabled', true);
+      } else { $('button').prop('disabled', false); }
       // Активные игроки
       let ulCode = '';
       if ($('#ActiveFreePlayers').prop('checked')) {
@@ -78,17 +219,17 @@ $(document).ready(function () {
       }
       document.getElementById('ActivePlayers__list').innerHTML = ulCode;
 
-
+      //Таблица рейтинга
       if (players.length != 0) {
          let ratCode = '<th>ФИО</th><th>Всего игр</th><th>Победы</th><th>Проигрыши</th><th>Процент побед</th>';
          playersRating = players.map(obj => ({ ...obj })); // Копирование
-         playersRating.sort((a, b) => (b.win) - (a.win)); // Сортировка по убыванию
-         for (let player of players) {
+         playersRating = playersRating.sort((a, b) => Number(b.win) - Number(a.win)); // Сортировка по убыванию
+         for (let player of playersRating) {
             if (player.games != 0) {
                ratCode += '<tr></tr><tr><td>' + player.name + '</td><td>' +
                   player.games + '</td><td style = "color: #69B849">' +
                   player.win + '</td><td style = "color: #E93E3E">' +
-                  player.lose + '</td><td>' + parseInt(player.win / player.games) + '%</td></tr>'
+                  player.lose + '</td><td>' + parseInt(player.win / player.games * 100) + '%</td></tr>'
             }
             else {
                ratCode += '<tr></tr><tr><td>' + player.name + '</td><td>' +
@@ -99,7 +240,52 @@ $(document).ready(function () {
          }
          document.getElementById('TableRating').innerHTML = ratCode;
       }
+      //Проверка игроков
+      if ($('#Player1').val() == $('#Player2').val()) {
+         $('#StartGame').prop('disabled', true);
+      } else {
+         $('#StartGame').prop('disabled', false);
+      }
+
    }, 0)
+
+   setInterval(() => {
+      //История игр
+      if (games.length != 0) {
+         let hisCode1 = '<tr><th>Игроки</th><th></th><th></th><th>Дата</th><th>Время игры</th></tr>';
+         let hisCode2 = '';
+         for (let game of games) {
+            if (game.win == 1) {
+               var Wplayer = game.playerx + ' <img style = "width: 24px; heigth: 24px;" src = "img/кубок.png" alt = "Кубок">'
+
+               hisCode2 = '<tr><td>' + Wplayer + '</td>' +
+                  '<td><p>Против</p></td>' +
+                  '<td>' + game.playero + '</td>' +
+                  '<td>' + game.data + '</td>' +
+                  '<td>' + game.time + '</td></tr>' + hisCode2;
+
+            } else if (game.win == 2) {
+               var Wplayer = game.playero + ' <img style = "width: 24px; heigth: 24px;" src = "/img/кубок.png" alt = "Кубок">'
+
+               hisCode2 = '<tr><td>' + game.playerx + '</td>' +
+                  '<td><p>Против</p></td>' +
+                  '<td>' + Wplayer + '</td>' +
+                  '<td>' + game.data + '</td>' +
+                  '<td>' + game.time + '</td></tr>' + hisCode2;
+            }
+            else {
+               hisCode2 = '<tr><td>' + game.playerx + '</td>' +
+                  '<td><p>Против</p></td>' +
+                  '<td>' + game.playero + '</td>' +
+                  '<td>' + game.data + '</td>' +
+                  '<td>' + game.time + '</td></tr>' + hisCode2;
+            }
+         }
+         hisCode1 += hisCode2;
+         console.log(games, hisCode1)
+         document.getElementById('HistoryTable').innerHTML = hisCode1;
+      }
+   }, 10000);
    /*==============================================Обработчики на клик=================================*/
    // Вход - выход
    $('.head__door').on('click', function () {
@@ -196,6 +382,7 @@ $(document).ready(function () {
             '</tr>';
          ListIndex += 1;
          $('#PlayerList-t tbody').append(newRow);
+         AllFree();
       }
    });
 
@@ -213,6 +400,116 @@ $(document).ready(function () {
 
       if (innerDiv.hasClass('LockStatus1')) { players[parseInt(this.getAttribute('data-index')) - 1].status = 0; players[parseInt(this.getAttribute('data-index')) - 1].lock = 1; }
       else { players[parseInt(this.getAttribute('data-index')) - 1].status = 1; players[parseInt(this.getAttribute('data-index')) - 1].lock = 0; }
-      console.log(players)
+
+      AllFree();
+   })
+   //Ход
+   WhoPlayer = 1;
+   count = 0;
+   PlayerWin = 0;
+   player1 = 0;
+   player2 = 0;
+   $('.gplace').on('click', function () {
+      if (!($(this).hasClass('disabled1') || $(this).hasClass('disabled2'))) {
+         $(this).prop('disabled', true);
+         if (WhoPlayer == 1) {
+            $(this).css('background-image', 'url(/img/x.svg)');
+            WhoPlayer = 0;
+            $(this).addClass('disabled1')
+            let a = '<p>Ходит</p><img src = "img/o.svg" style = "width: 24px; heigth: 24px"><p>' + player2 + '</p>';
+            document.getElementsByClassName('gfoot')[0].innerHTML = a;
+         } else {
+            $(this).css('background-image', 'url(/img/o.svg)'); WhoPlayer = 1;
+            $(this).addClass('disabled2');
+            let a = '<p>Ходит</p><img src = "img/x.svg" style = "width: 24px; heigth: 24px"><p>' + player1 + '</p>';
+            document.getElementsByClassName('gfoot')[0].innerHTML = a;
+         }
+         count += 1;
+         PlayerWin = taskXO(count);
+         if (PlayerWin != 0) {
+            $('gplace').prop('disabled', true);
+            clearInterval(timer);
+            let time = document.getElementById('gtimer').innerText
+            games[games.length] = NewGame(PlayerWin, time, player1, player2, formatDate(new Date));
+
+            i1 = players.findIndex(obj => obj.name === player1)
+            i2 = players.findIndex(obj => obj.name === player2)
+            if (PlayerWin == 1) {
+               players[i1].games = players[i1].games += 1;
+               players[i1].win = players[i1].win += 1;
+
+               players[i2].games = players[i2].games += 1;
+               players[i2].lose = players[i2].lose += 1;
+            }
+            else if (PlayerWin == 2) {
+               players[i2].games = players[i2].games += 1;
+               players[i2].win = players[i2].win += 1;
+
+               players[i1].games = players[i1].games += 1;
+               players[i1].lose = players[i1].lose += 1;
+            } else {
+               players[i1].games = players[i1].games += 1;
+               players[i1].lose = players[i1].lose += 1;
+
+               players[i2].games = players[i2].games += 1;
+               players[i2].games = players[i2].lose += 1;
+            }
+
+            $('.main__repeat').addClass('dflex');
+            $('.main__repeat').removeClass('dnone');
+
+            $('#overlay1').show()
+            $('body').css('overflow-y', 'hidden');
+         }
+      }
+   });
+   function stGame() {
+      $('.gplace').removeClass('disabled1');
+      $('.gplace').prop('disabled', false);
+      $('.gplace').removeClass('disabled2');
+      $('.gplace').removeClass('RedWin');
+      $('.gplace').removeClass('GreenWin');
+      $('.gplace').css('background-image', '')
+      timerf('gtimer');
+      WhoPlayer = 1
+      count = 0
+      PlayerWin = 0
+      player1 = $('#Player1').val()
+      player2 = $('#Player2').val()
+      a = '<p>Ходит</p><img src = "img/x.svg" style = "width: 24px; heigth: 24px"><p>' + player1 + '</p>';
+      document.getElementsByClassName('gfoot')[0].innerHTML = a;
+
+      document.getElementById('gplayer-1').innerText = player1;
+      document.getElementById('gplayer-2').innerText = player2;
+
+      if (players[players.findIndex(obj => obj.name === player1)].games === 0) {
+         document.getElementById('gproc-1').innerText = '0%';
+      } else { document.getElementById('gproc-1').innerText = parseInt(players[players.findIndex(obj => obj.name === player1)].win / players[players.findIndex(obj => obj.name === player1)].games * 100) + '%' }
+      if (players[players.findIndex(obj => obj.name === player2)].games === 0) {
+         document.getElementById('gproc-2').innerText = '0%';
+      } else { document.getElementById('gproc-2').innerText = parseInt(players[players.findIndex(obj => obj.name === player2)].win / players[players.findIndex(obj => obj.name === player2)].games * 100) + '%' }
+   }
+   //Начало игры
+   $('#StartGame').on('click', function () {
+      stGame();
+      $('.main__who').hide();
+      $('.main__game').show();
+   })
+   //Возвращение в меню
+   $('#goMenu').on('click', function () {
+      $('.main__repeat').addClass('dnone');
+      $('#overlay1').hide()
+      $('body').css('overflow-y', 'none');
+      $('.main__game').hide()
+      $('.main__who').show()
+   })
+   $('#repeatGame').on('click', function () {
+      stGame();
+      $('.main__repeat').addClass('dnone');
+      $('.main__repeat').removeClass('dflex');
+      $('.main__repeat').removeClass('dflex');
+      $('#overlay1').hide()
+      $('body').css('overflow-y', 'none');
    })
 })
+
