@@ -649,26 +649,29 @@ main {
   display: none !important;
 }
 #chat-open {
+  transition: .5s;
   width: 3vw;
   height: 3vw;
   background-image: url("/img/chat.svg");
   background-size: cover;
   background-repeat: no-repeat;
-  position: fixed;
+  position: absolute;
   right: 1vw;
   bottom: 1vh;
   z-index: 1;
 }
 .main__chat {
+  transform: translateX(150%);
+  transition: .5s;
   z-index: 1;
   position: absolute;
   form {
     display: grid;
-    grid-template: 1fr / 36px 1fr 36px;
+    grid-template: 1fr / 36px 1fr 36px 36px;
     height: 36px;
     width: 100%;
     gap: 3px;
-    .chat__footer-player {
+    .chat__footer-player, .btn, #chat-close {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -676,23 +679,106 @@ main {
       height: 100%;
       width: 100%;
     }
-    #chatUser {
+    span {
       position: absolute;
       left: 0;
       top: 0;
       width: 36px;
       height: 36px;
-      background-color: #fff976;
+      background-color: #60c2aa;
       border-radius: 12px;
+      padding: 8px;
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
     }
     input {
       padding: 8px;
       border-radius: 12px;
       height: 100%;
     }
+    button {
+      position: absolute;
+      width: 100%; height: 100%;
+    }
   }
-  right: 1vw;
-  bottom: 1vh;
+  right: 1.5vw;
+  bottom: 3vh;
   gap: 5px;
   width: 25vw;
+}
+.chat {
+  width: 100%;
+  max-height: 50vh;
+}
+#chat-close {
+  background-image: url("/img/close-chat.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.select {
+  &:hover {
+    cursor: pointer;
+  }
+}
+#chatGo {
+  pointer-events: none;
+}
+#listPChat {
+  overflow-y: scroll;
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateY(-100%);
+  max-height: 50vh;
+  li {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 3px 5px;
+    margin: 2.5px 0;
+    z-index: 10;
+    display: none;
+    width: 100%;
+    &:hover {
+      background-color: #ffffff20;
+      cursor: pointer;
+    }
+  }
+  li:nth-child(even) {
+    border: #60c2aa 1px solid;
+  }
+  li:nth-child(odd) {
+    border: 1px solid #e38bac;
+  }
+}
+
+.showBlock {
+  display: block !important;
+}
+#btnd:disabled + #chatGo{
+  background-color: #60c2aa40;
+}
+.chat {
+  max-height: 40vh;
+  #messages {
+    overflow-y: scroll;
+    max-height: 40vh;
+  }
+}
+@keyframes kubok {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-25deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+.main__repeat img {
+  animation: kubok .9s linear infinite;
 }

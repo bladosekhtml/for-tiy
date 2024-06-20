@@ -14,6 +14,13 @@ $(document).ready(function () {
    ListIndex = 1
    games = []
 
+   /*====================================Отключаем дефолтное поведение====================*/
+   $('#chat-message').on('keydown', function (event) {
+      if (event.keyCode === 13) {
+         event.preventDefault();
+         $('#btnd').trigger('click');
+      }
+   });
    /*============================================ Запрет ввода =================================*/
    const numberInput = document.getElementById('AgePlayer');
    numberInput.addEventListener('input', function (event) {
@@ -69,21 +76,24 @@ $(document).ready(function () {
 
       return `${day} ${months[monthIndex]} ${year}`;
 
-      //Вывод всех активных игроков
    }
+   //Вывод всех активных игроков //Лист в чате
    function AllFree() {
       var freeplayers = document.querySelectorAll('select');
       var selCode = '';
+      let ulCodePlayer = '';
 
       for (let player of players) {
          if (player.status === 1) {
             selCode += '<option value = "' + player.name + '">' + player.name + '</option>';
+            ulCodePlayer += '<li>' + player.name + '</li>'
          }
       }
 
       freeplayers.forEach(element => {
          element.innerHTML = selCode;
       });
+      document.getElementById('listPChat').innerHTML = ulCodePlayer;
    }
 
    //Таймер
@@ -194,6 +204,34 @@ $(document).ready(function () {
       }
       else { return 0 }
    }
+
+   //запусе игры и их статистика
+   function stGame() {
+      $('.gplace').removeClass('disabled1');
+      $('.gplace').prop('disabled', false);
+      $('.gplace').removeClass('disabled2');
+      $('.gplace').removeClass('RedWin');
+      $('.gplace').removeClass('GreenWin');
+      $('.gplace').css('background-image', '')
+      timerf('gtimer');
+      WhoPlayer = 1
+      count = 0
+      PlayerWin = 0
+      player1 = $('#Player1').val()
+      player2 = $('#Player2').val()
+      a = '<p>Ходит</p><img src = "img/x.svg" style = "width: 24px; heigth: 24px"><p>' + player1 + '</p>';
+      document.getElementsByClassName('gfoot')[0].innerHTML = a;
+
+      document.getElementById('gplayer-1').innerText = player1;
+      document.getElementById('gplayer-2').innerText = player2;
+
+      if (players[players.findIndex(obj => obj.name === player1)].games === 0) {
+         document.getElementById('gproc-1').innerText = '0%';
+      } else { document.getElementById('gproc-1').innerText = parseInt(players[players.findIndex(obj => obj.name === player1)].win / players[players.findIndex(obj => obj.name === player1)].games * 100) + '%' }
+      if (players[players.findIndex(obj => obj.name === player2)].games === 0) {
+         document.getElementById('gproc-2').innerText = '0%';
+      } else { document.getElementById('gproc-2').innerText = parseInt(players[players.findIndex(obj => obj.name === player2)].win / players[players.findIndex(obj => obj.name === player2)].games * 100) + '%' }
+   }
    /*==================================Интервальный обработчик==================*/
    setInterval(function () {
       //Блокировка кнопок
@@ -221,6 +259,7 @@ $(document).ready(function () {
 
       //Таблица рейтинга
       if (players.length != 0) {
+         $('#listPChat').show()
          let ratCode = '<th>ФИО</th><th>Всего игр</th><th>Победы</th><th>Проигрыши</th><th>Процент побед</th>';
          playersRating = players.map(obj => ({ ...obj })); // Копирование
          playersRating = playersRating.sort((a, b) => Number(b.win) - Number(a.win)); // Сортировка по убыванию
@@ -246,6 +285,12 @@ $(document).ready(function () {
       } else {
          $('#StartGame').prop('disabled', false);
       }
+
+      //Проверка на выбронного игрока в чат
+      if (UserChat != '' && document.getElementById('chat-message').value != '') {
+         $('#btnd').prop('disabled', false);
+      } else { $('#btnd').prop('disabled', true); }
+
 
    }, 0)
 
@@ -346,7 +391,7 @@ $(document).ready(function () {
    // Создание нового игрока
    $('#CreateNewPlayer').on('click', function () {
       let count = 0;
-      if ($('#NamePlayer').val() == '') {
+      if ($('#NamePlayer').val() == '' || players.some(player => player.name === $('#NamePlayer').val())) {
          $('#NamePlayer').css('border', 'red 1px solid');
          count += 1;
       } else { $('#NamePlayer').css('border', '#DCDCDF 1px solid'); }
@@ -463,32 +508,6 @@ $(document).ready(function () {
          }
       }
    });
-   function stGame() {
-      $('.gplace').removeClass('disabled1');
-      $('.gplace').prop('disabled', false);
-      $('.gplace').removeClass('disabled2');
-      $('.gplace').removeClass('RedWin');
-      $('.gplace').removeClass('GreenWin');
-      $('.gplace').css('background-image', '')
-      timerf('gtimer');
-      WhoPlayer = 1
-      count = 0
-      PlayerWin = 0
-      player1 = $('#Player1').val()
-      player2 = $('#Player2').val()
-      a = '<p>Ходит</p><img src = "img/x.svg" style = "width: 24px; heigth: 24px"><p>' + player1 + '</p>';
-      document.getElementsByClassName('gfoot')[0].innerHTML = a;
-
-      document.getElementById('gplayer-1').innerText = player1;
-      document.getElementById('gplayer-2').innerText = player2;
-
-      if (players[players.findIndex(obj => obj.name === player1)].games === 0) {
-         document.getElementById('gproc-1').innerText = '0%';
-      } else { document.getElementById('gproc-1').innerText = parseInt(players[players.findIndex(obj => obj.name === player1)].win / players[players.findIndex(obj => obj.name === player1)].games * 100) + '%' }
-      if (players[players.findIndex(obj => obj.name === player2)].games === 0) {
-         document.getElementById('gproc-2').innerText = '0%';
-      } else { document.getElementById('gproc-2').innerText = parseInt(players[players.findIndex(obj => obj.name === player2)].win / players[players.findIndex(obj => obj.name === player2)].games * 100) + '%' }
-   }
    //Начало игры
    $('#StartGame').on('click', function () {
       stGame();
@@ -503,6 +522,8 @@ $(document).ready(function () {
       $('.main__game').hide()
       $('.main__who').show()
    })
+
+   //Новая игра реванш
    $('#repeatGame').on('click', function () {
       stGame();
       $('.main__repeat').addClass('dnone');
@@ -511,5 +532,59 @@ $(document).ready(function () {
       $('#overlay1').hide()
       $('body').css('overflow-y', 'none');
    })
+
+   //Чат открыть
+   $('#chat-open').on('click', function () {
+      $('#chat-open').css('transform', 'translateX(150%)');
+      $('.main__chat').css('transform', 'translateX(0)');
+   });
+
+   //Чат закрыть
+   $('#chat-close').on('click', function () {
+      $('#chat-open').css('transform', 'translateX(0)');
+      $('.main__chat').css('transform', 'translateX(150%)');
+      $('#listPChat li').removeClass('showBlock');
+   });
+
+   //Показ юзеров
+   $('#chatUser').on('click', function () {
+      $('#listPChat li').toggleClass('showBlock');
+   })
+
+
+   var UserChat = '';
+   var UserColor = '';
+   //Кто пишет в чате 
+   $('#listPChat').on('click', 'li', function () {
+      UserChat = $(this).text();
+      UserColor = $(this).css('border-color');
+      $('#listPChat li').toggleClass('showBlock');
+   })
+
+   //Отправление сообщения в чат
+   $('#btnd').on('click', function () {
+      let message = document.getElementById('chat-message').value;
+      console.log('message')
+      if (message != '' && UserChat != '') {
+         document.getElementById('chat-message').value = '';
+
+         let codeMessages = document.getElementById('messages').innerHTML
+
+         let now = new Date();
+         let hours = now.getHours();
+         let minutes = now.getMinutes();;
+
+         let Usertime = hours + ':' + minutes
+
+         let code = '<li style = "margin: 0 3px 5px;"><div style = "background-color: white; box-shadow: 0px 2px 6px 0px #2C39791A; border-radius: 16px 16px 16px 0; padding: 12px; margin-right: 60px;">' +
+            '<div style = "display: flex; justify-content: space-between; align-item: center;"><p style = "color: ' + UserColor + '; font-size: 14px">' + UserChat + '</p><p style = "font-size: 14px; font-weigth: 400; color: #898993;">' + Usertime + '</p></div><div>' +
+            message + '</div></div></li>';
+         codeMessages += code;
+         document.getElementById('messages').innerHTML = codeMessages;
+      }
+      var chat = $('#messages');
+      chat.scrollTop(chat.prop('scrollHeight'));
+   })
+
 })
 
