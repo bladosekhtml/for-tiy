@@ -258,7 +258,8 @@ main {
 .main__history table tr th {
   width: 160px;
 }
-.main__history table tr th:nth-child(1), .main__history table tr th:nth-child(3) {
+.main__history table tr th:nth-child(1),
+.main__history table tr th:nth-child(3) {
   width: 300px;
 }
 .main__history table tr th:nth-child(2) {
@@ -402,7 +403,8 @@ main {
   color: white;
 }
 
-#overlay, #overlay1 {
+#overlay,
+#overlay1 {
   z-index: 77;
   display: none;
   position: absolute;
@@ -677,7 +679,7 @@ main {
 .gtimer {
   width: 140px;
   height: 80px;
-  background-color: #EDEDED;
+  background-color: #ededed;
   border-radius: 8px;
 }
 
@@ -721,16 +723,17 @@ main {
   gap: 12px;
 }
 
-.disabled1, .disabled2 {
+.disabled1,
+.disabled2 {
   cursor: default;
 }
 
 .GreenWin {
-  background-color: #CFEDE6;
+  background-color: #cfede6;
 }
 
 .RedWin {
-  background-color: #F3BBD0;
+  background-color: #f3bbd0;
 }
 
 .main__repeat {
@@ -788,10 +791,10 @@ main {
 }
 .main__repeat #repeatGame {
   color: white;
-  background-color: #60C2AA;
+  background-color: #60c2aa;
 }
 .main__repeat #goMenu {
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
 }
 
 .dflex {
@@ -802,4 +805,63 @@ main {
 
 .dnone {
   display: none !important;
+}
+
+#chat-open {
+  width: 3vw;
+  height: 3vw;
+  background-image: url("/img/chat.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: fixed;
+  right: 1vw;
+  bottom: 1vh;
+  z-index: 1;
+}
+
+.main__chat {
+  z-index: 1;
+  position: absolute;
+  right: 1vw;
+  bottom: 1vh;
+  gap: 5px;
+  width: 25vw;
+}
+.main__chat form {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr;
+  -ms-grid-columns: 36px 3px 1fr 3px 36px;
+      grid-template: 1fr/36px 1fr 36px;
+  height: 36px;
+  width: 100%;
+  gap: 3px;
+}
+.main__chat form .chat__footer-player {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.main__chat form #chatUser {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 36px;
+  height: 36px;
+  background-color: #fff976;
+  border-radius: 12px;
+}
+.main__chat form input {
+  padding: 8px;
+  border-radius: 12px;
+  height: 100%;
 }
